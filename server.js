@@ -3,6 +3,7 @@ const Koa = require('koa');
 const mount = require('koa-mount');
 const graphqlHTTP = require('koa-graphql');
 const cors = require('@koa/cors');
+const serve = require('koa-static');
 
 require('dotenv').config()
 
@@ -24,8 +25,8 @@ app.use(mount('/graphql', graphqlHTTP({
   graphiql: true
 })))
 
+app.use(serve(__dirname + '/public'));
+
 app.on('error', err => {
   log.error('server error', err)
 });
-
-
