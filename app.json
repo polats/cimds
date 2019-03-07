@@ -1,0 +1,16 @@
+{
+  "name": "Cryptoitem Metadata Server",
+  "description": "Server to manage blockchain items",
+  "logo": "http://docs.alto.io/alto-forge-icon.png",
+  "repository": "https://github.com/polats/cimds",
+  "success_url": "/graphql",
+  "addons": [
+    "mlab"
+  ],
+  "env": {
+    "PUBLIC_URL": {
+      "description": "The HTTPS URL of this app: either your custom domain or default 'herokuapp.com' hostname.",
+      "value": "https://YOURAPPNAME.herokuapp.com"
+    }
+  }
+}
