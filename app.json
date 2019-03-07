@@ -5,7 +5,7 @@
   "repository": "https://github.com/polats/cimds",
   "success_url": "/graphql",
   "addons": [
-    "mlab"
+    "mongolab"
   ],
   "env": {
     "PUBLIC_URL": {
