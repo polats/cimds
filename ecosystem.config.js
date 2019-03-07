@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'cimds',
+    name: 'itemdef-server',
     script: 'server.js',
     instances: 1,
     autorestart: true,

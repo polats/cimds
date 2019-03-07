@@ -1,5 +1,5 @@
 {
-  "name": "koa-graphQL-mongo-api",
+  "name": "itemdef-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
