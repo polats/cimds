@@ -11,6 +11,8 @@ const app = new Koa();
 const server = new apolloServerKoa.ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
+  playground: true,  
   uploads: {
     // Limits here should be stricter than config for surrounding
     // infrastructure such as Nginx so errors can be handled elegantly by
