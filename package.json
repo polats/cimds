@@ -14,7 +14,7 @@
     "url": "https://polats.com"
   },
   "engines": {
-    "node": ">=8.6"
+    "node": ">=10.15.3"
   },
   "dependencies": {
     "@koa/cors": "^2.2.3",
