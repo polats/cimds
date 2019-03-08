@@ -3,25 +3,30 @@ import Koa from 'koa'
 import resolvers from './resolvers'
 import typeDefs from './types'
 
-import mount from 'koa-mount'
-import graphqlHTTP from 'koa-graphql'
 import cors from '@koa/cors'
-
-import schema from './graphql/schema';
-import initDB from './database';
-
-initDB();
+import serve from 'koa-static'
 
 const app = new Koa();
 
-app.listen(process.env.PORT || 9000);
+const server = new apolloServerKoa.ApolloServer({
+  typeDefs,
+  resolvers,
+  uploads: {
+    // Limits here should be stricter than config for surrounding
+    // infrastructure such as Nginx so errors can be handled elegantly by
+    // graphql-upload:
+    // https://github.com/jaydenseric/graphql-upload#type-uploadoptions
+    maxFileSize: 10000000, // 10 MB
+    maxFiles: 20
+  }
+})
+
+server.applyMiddleware({ app })
 
 app.use(cors());
+app.use(serve(process.cwd() + '/public'));
 
-app.use(mount('/graphql', graphqlHTTP({
-  schema: schema,
-  graphiql: true
-})))
+app.listen(process.env.PORT || 9000);
 
 app.on('error', err => {
   log.error('server error', err)

@@ -2,8 +2,8 @@
   "name": "itemdef-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "scripts": {
+    "dev": "nodemon -i db.json",
     "start": "node --experimental-modules -r dotenv/config server"
   },
   "keywords": [],
@@ -18,15 +18,16 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.3",
+    "apollo-server-koa": "^2.3.1",
     "dotenv": "^6.2.0",
     "graphql": "^14.1.1",
     "koa": "^2.6.2",
-    "koa-graphql": "^0.8.0",
     "koa-mount": "^4.0.0",
-    "mongoose": "^5.4.7",
-    "apollo-server-koa": "^2.3.1",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.11",
     "lowdb": "^1.0.0",
     "mkdirp": "^0.5.1",
+    "mongoose": "^5.4.7",
     "promises-all": "^1.0.0",
     "shortid": "^2.2.14"
   }
