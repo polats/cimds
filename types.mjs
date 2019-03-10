@@ -7,7 +7,7 @@ export default /* GraphQL */ `
   }
 
   type ItemDefinition {
-    id: ID!
+    def_id: ID!
     name: String!
     description: String!
     image: String!
@@ -15,7 +15,14 @@ export default /* GraphQL */ `
 
   type ItemInstance {
     id: ID!
-    itemdef: ItemDefinition
+    def_id: String!
+  }
+
+  type ItemLookup {
+    id: String!
+    name: String!
+    description: String!
+    image: String!
   }
 
   input CreateGadgetInput {
@@ -26,7 +33,8 @@ export default /* GraphQL */ `
   type Query {
     uploads: [File]
     itemDefinitions: [ItemDefinition]
-    getItemInstance(id: String!): ItemInstance
+    itemInstances: [ItemInstance]
+    lookUpItem(id: String!): ItemLookup
   }
 
   type Mutation {

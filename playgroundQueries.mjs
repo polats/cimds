@@ -3,24 +3,29 @@ export default {
   itemDefinitions :
   `query {
     itemDefinitions {
-      id
+      def_id
       name
       description
       image
     }
   }`,
 
-  getItemInstance :
+  itemInstances :
   `query {
-    getItemInstance(id:"2")
+    itemInstances {
+      id
+      def_id
+    }
+  }`,
+
+  lookUpItem :
+  `query {
+    lookUpItem(id:"2")
   	{
       id
-      itemdef {
-        id
-        name
-        description
-        image
-      }
+      name
+      description
+      image
     }
   }`
 }

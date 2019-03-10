@@ -3,19 +3,19 @@
 export default {
   itemDefinitions : [
     {
-      id: "eWRhpRV",
+      def_id: "eWRhpRV",
       name: "Bard Armor",
       description: "Armor for Bards",
       image: "Bard_Armor.png",
     },
     {
-      id: "23TplPdS",
+      def_id: "23TplPdS",
       name: "Bard Lute",
       description: "Lute for Bards",
       image: "Bard_Lute.png"
     },
     {
-      id: "46Juzcyx",
+      def_id: "46Juzcyx",
       name: "Bard Shortsword",
       description: "Shortsword for Bards",
       image: "Bard_Shortsword.png"
@@ -25,23 +25,23 @@ export default {
   itemInstances :  [
     {
       id: "1",
-      itemdef: "eWRhpRV"
+      def_id: "eWRhpRV"
     },
     {
       id: "2",
-      itemdef: "46Juzcyx"
+      def_id: "46Juzcyx"
     },
     {
       id: "3",
-      itemdef: "23TplPdS"
+      def_id: "23TplPdS"
     },
     {
       id: "4",
-      itemdef: "23TplPdS"
+      def_id: "23TplPdS"
     },
     {
       id: "5",
-      itemdef: "eWRhpRV"
+      def_id: "eWRhpRV"
     }
   ]
 }

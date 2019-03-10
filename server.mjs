@@ -25,9 +25,15 @@ const server = new apolloServerKoa.ApolloServer({
 
       },
       {
-        name: "Get Item Instances",
+        name: "Item Instances",
         endpoint: "",
-        query: queries.getItemInstance
+        query: queries.itemInstances
+
+      },
+      {
+        name: "Look Up Item",
+        endpoint: "",
+        query: queries.lookUpItem
 
       }
     ]

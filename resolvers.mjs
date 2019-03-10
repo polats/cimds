@@ -54,9 +54,19 @@ const addItemDefinition = (args) => {
   return args;
 }
 
-const getItemInstance = (args) => {
-  var def = _.filter(xd.itemDefinitions, {id: xd.itemInstances[args.id-1].itemdef})[0];
-  return {id: args.id, itemdef: def}
+const lookUpItem = (args) => {
+  var def = _.filter(xd.itemDefinitions, {def_id: xd.itemInstances[args.id-1].def_id})[0];
+  var obj = {
+    id: args.id,
+    name: def.name,
+    description: def.description,
+    image: def.description
+  }
+  return obj
+}
+
+const itemInstances = () => {
+  return xd.itemInstances
 }
 
 export default {
@@ -64,7 +74,8 @@ export default {
   Query: {
     uploads: () => db.get('uploads').value(),
     itemDefinitions: () => {return xd.itemDefinitions},
-    getItemInstance: (obj, args) => getItemInstance(args)
+    itemInstances: () => itemInstances(),
+    lookUpItem: (obj, args) => lookUpItem(args)
   },
   Mutation: {
     singleUpload: (obj, { file }) => processUpload(file),
