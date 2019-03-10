@@ -2,17 +2,36 @@ import apolloServerKoa from 'apollo-server-koa'
 import Koa from 'koa'
 import resolvers from './resolvers'
 import typeDefs from './types'
+import queries from './playgroundQueries'
 
 import cors from '@koa/cors'
 import serve from 'koa-static'
 
 const app = new Koa();
 
+
+
 const server = new apolloServerKoa.ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-  playground: true,  
+  playground: {
+    tabs:
+    [
+      {
+        name: "Item Definitions",
+        endpoint: "",
+        query: queries.itemDefinitions
+
+      },
+      {
+        name: "Get Item Instances",
+        endpoint: "",
+        query: queries.getItemInstance
+
+      }
+    ]
+  },
   uploads: {
     // Limits here should be stricter than config for surrounding
     // infrastructure such as Nginx so errors can be handled elegantly by
