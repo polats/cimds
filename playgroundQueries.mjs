@@ -3,10 +3,9 @@ export default {
   itemDefinitions :
   `query {
     itemDefinitions {
-      def_id
+      id
       name
       description
-      image
     }
   }`,
 
@@ -36,6 +35,7 @@ export default {
     image: "Test"
   })
   {
+    id
     name
   }
 }`

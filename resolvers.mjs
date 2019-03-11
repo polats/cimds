@@ -8,6 +8,7 @@ import shortid from 'shortid'
 import _ from 'lodash'
 
 import xd from './exampleData'
+import ItemDefinition from './models/itemDefinition'
 
 const UPLOAD_DIR = './uploads'
 const db = lowdb(new FileSync('db.json'))
@@ -50,8 +51,13 @@ const processUpload = async upload => {
 }
 
 const addItemDefinition = (args) => {
-  console.log(args.input.name)
-  return args;
+
+  const newItemDefinition = new ItemDefinition({
+    name: args.name,
+    description: args.description
+  })
+
+  return newItemDefinition.save();
 }
 
 const lookUpItem = (args) => {
@@ -75,7 +81,7 @@ export default {
   // queries
   Query: {
     uploads: () => db.get('uploads').value(),
-    itemDefinitions: () => {return xd.itemDefinitions},
+    itemDefinitions: () => {return ItemDefinition.find({})},
     itemInstances: () => itemInstances(),
     lookUpItem: (obj, args) => lookUpItem(args)
   },
@@ -98,7 +104,7 @@ export default {
       return resolve
     },
 
-    addItemDefinition: (root, args) => addItemDefinition(args)
+    addItemDefinition: (root, args) => addItemDefinition(args.input)
 
   }
 }

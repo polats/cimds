@@ -7,10 +7,9 @@ export default /* GraphQL */ `
   }
 
   type ItemDefinition {
-    def_id: ID!
+    id: ID!
     name: String!
     description: String!
-    image: String!
   }
 
   input ItemDefinitionInput {
