@@ -50,7 +50,7 @@ const processUpload = async upload => {
 }
 
 const addItemDefinition = (args) => {
-  console.log(args)
+  console.log(args.input.name)
   return args;
 }
 
@@ -71,14 +71,19 @@ const itemInstances = () => {
 
 export default {
   Upload: apolloServerKoa.GraphQLUpload,
+
+  // queries
   Query: {
     uploads: () => db.get('uploads').value(),
     itemDefinitions: () => {return xd.itemDefinitions},
     itemInstances: () => itemInstances(),
     lookUpItem: (obj, args) => lookUpItem(args)
   },
+
+  // mutations
   Mutation: {
     singleUpload: (obj, { file }) => processUpload(file),
+
     async multipleUpload(obj, { files }) {
       const { resolve, reject } = await promisesAll.all(
         files.map(processUpload)
@@ -92,6 +97,8 @@ export default {
 
       return resolve
     },
-    addItemDefinition: (obj, args) => addItemDefinition(args)
+
+    addItemDefinition: (root, args) => addItemDefinition(args)
+
   }
 }

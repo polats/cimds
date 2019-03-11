@@ -27,5 +27,16 @@ export default {
       description
       image
     }
-  }`
+  }`,
+  addItemDefinition :
+  `mutation {
+  addItemDefinition(input: {
+    name: "Weapon",
+    description:"Weapon Desc",
+    image: "Test"
+  })
+  {
+    name
+  }
+}`
 }

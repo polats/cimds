@@ -13,6 +13,12 @@ export default /* GraphQL */ `
     image: String!
   }
 
+  input ItemDefinitionInput {
+    name: String!
+    description: String!
+    image: String!
+  }
+
   type ItemInstance {
     id: ID!
     def_id: String!
@@ -40,7 +46,7 @@ export default /* GraphQL */ `
   type Mutation {
     singleUpload(file: Upload!): File!
     multipleUpload(files: [Upload!]!): [File!]!
-    addItemDefinition(name: String!): ItemDefinition
+    addItemDefinition(input: ItemDefinitionInput!): ItemDefinition
   }
 
 

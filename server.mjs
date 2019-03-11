@@ -6,37 +6,43 @@ import queries from './playgroundQueries'
 
 import cors from '@koa/cors'
 import serve from 'koa-static'
+import mongoose from 'mongoose';
+
+const initDB = () => {
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+  mongoose.connection.once('open', () => {
+    console.log('connected to database');
+  });
+}
+
+var tabProps = []
+
+// create default query & mutation tabs based on playgroundQueries.js
+const prepareTabs = () => {
+  Object.getOwnPropertyNames(queries).map(queryName => {
+      var tab = {
+        name: queryName,
+        endpoint: "",
+        query: queries[queryName]
+      }
+      tabProps.push(tab)
+    }
+  )
+}
+
+
+// start initialization
+initDB()
+prepareTabs()
 
 const app = new Koa();
-
-
 
 const server = new apolloServerKoa.ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   playground: {
-    tabs:
-    [
-      {
-        name: "Item Definitions",
-        endpoint: "",
-        query: queries.itemDefinitions
-
-      },
-      {
-        name: "Item Instances",
-        endpoint: "",
-        query: queries.itemInstances
-
-      },
-      {
-        name: "Look Up Item",
-        endpoint: "",
-        query: queries.lookUpItem
-
-      }
-    ]
+    tabs: tabProps
   },
   uploads: {
     // Limits here should be stricter than config for surrounding
