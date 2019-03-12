@@ -9,6 +9,7 @@ import _ from 'lodash'
 
 import xd from './exampleData'
 import ItemDefinition from './models/itemDefinition'
+import ItemInstance from './models/itemInstance'
 
 const UPLOAD_DIR = './uploads'
 const db = lowdb(new FileSync('db.json'))
@@ -50,14 +51,59 @@ const processUpload = async upload => {
   return storeDB({ id, filename, mimetype, path })
 }
 
-const addItemDefinition = (args) => {
+const addItemDefinition = (input) => {
 
   const newItemDefinition = new ItemDefinition({
-    name: args.name,
-    description: args.description
+    name: input.name,
+    description: input.description
   })
 
-  return newItemDefinition.save();
+  return newItemDefinition.save()
+}
+
+const addItemInstance = (input) => {
+
+  const newItemInstance = new ItemInstance({
+    def_id: input.def_id
+  })
+
+  return newItemInstance.save()
+}
+
+const getAllItems = () => {
+
+  return ItemInstance.find({}).exec().then(itemInstances => {
+
+    var itemDefIds = [];
+
+     itemInstances.map(itemInstance => {
+       itemDefIds.push(itemInstance.def_id)
+     })
+
+     var allItems = []
+     var index = 1
+
+     return ItemDefinition.find()
+       .where('_id')
+       .in(itemDefIds)
+       .exec()
+       .then(itemDefinitions => {
+
+         itemDefIds.map(itemDefId => {
+           var itemDefinition = itemDefinitions.find(obj => obj._id.equals(itemDefId))
+
+            var item = {
+              id: index++,
+              name: itemDefinition.name,
+              description: itemDefinition.description
+            }
+
+            allItems.push(item)
+         })
+
+         return allItems
+       })
+  })
 }
 
 const lookUpItem = (args) => {
@@ -82,7 +128,8 @@ export default {
   Query: {
     uploads: () => db.get('uploads').value(),
     itemDefinitions: () => {return ItemDefinition.find({})},
-    itemInstances: () => itemInstances(),
+    itemInstances: () => {return ItemInstance.find({})},
+    allItems: () => getAllItems(),
     lookUpItem: (obj, args) => lookUpItem(args)
   },
 
@@ -104,7 +151,7 @@ export default {
       return resolve
     },
 
-    addItemDefinition: (root, args) => addItemDefinition(args.input)
-
+    addItemDefinition: (root, args) => addItemDefinition(args.input),
+    addItemInstance: (root, args) => addItemInstance(args)
   }
 }

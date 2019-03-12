@@ -1,5 +1,15 @@
 // default graphQL playground queries
 export default {
+  allItems:
+  `
+  query {
+    allItems {
+      id
+      name
+      description
+    }
+  }
+  `,
   itemDefinitions :
   `query {
     itemDefinitions {
@@ -37,6 +47,16 @@ export default {
   {
     id
     name
+  }
+}`,
+  addItemInstance :
+  `mutation {
+  addItemInstance(
+    def_id: "5c86887825a663510c7a37a2",
+  )
+  {
+    id
+    def_id
   }
 }`
 }

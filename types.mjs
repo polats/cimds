@@ -37,6 +37,7 @@ export default /* GraphQL */ `
 
   type Query {
     uploads: [File]
+    allItems: [ItemLookup]
     itemDefinitions: [ItemDefinition]
     itemInstances: [ItemInstance]
     lookUpItem(id: String!): ItemLookup
@@ -46,6 +47,7 @@ export default /* GraphQL */ `
     singleUpload(file: Upload!): File!
     multipleUpload(files: [Upload!]!): [File!]!
     addItemDefinition(input: ItemDefinitionInput!): ItemDefinition
+    addItemInstance(def_id: String!): ItemInstance
   }
 
 
