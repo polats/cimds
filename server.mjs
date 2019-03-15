@@ -1,12 +1,13 @@
 import apolloServerKoa from 'apollo-server-koa'
 import Koa from 'koa'
+import Router from 'koa-router'
 import resolvers from './resolvers'
 import typeDefs from './types'
 import queries from './playgroundQueries'
 
 import cors from '@koa/cors'
-import serve from 'koa-static'
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
+import next from 'next'
 
 const initDB = () => {
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
@@ -35,9 +36,11 @@ const prepareTabs = () => {
 initDB()
 prepareTabs()
 
-const app = new Koa();
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
 
-const server = new apolloServerKoa.ApolloServer({
+const graphQLserver = new apolloServerKoa.ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
@@ -54,13 +57,32 @@ const server = new apolloServerKoa.ApolloServer({
   }
 })
 
-server.applyMiddleware({ app })
+app.prepare().then( () => {
+  const server = new Koa();
+  const router = new Router();
 
-app.use(cors());
-app.use(serve(process.cwd() + '/public'));
+  graphQLserver.applyMiddleware({ app: server })
 
-app.listen(process.env.PORT || 9000);
+  server.use(cors());
 
-app.on('error', err => {
-  log.error('server error', err)
-});
+  router.get("*", async ctx => {
+    if (!ctx.path.match(/graphql/)) {
+      await handle(ctx.req, ctx.res);
+      ctx.respond = false;
+    }
+  });
+
+  server.use(router.routes());
+
+  server.listen(process.env.PORT || 3000);
+
+  server.on('error', err => {
+    console.log('server error', err)
+  });
+
+
+
+}).catch((ex) => {
+  console.error(ex.stack)
+  process.exit(1)
+})

@@ -5,6 +5,13 @@
   "repository": "https://github.com/polats/itemdef-server",
   "success_url": "/graphql",
   "addons": [
-    "mongolab"
-  ]
+    "mongolab",
+    "cloudinary"
+  ],
+  "env": {
+    "GRAPHQL_URI": {
+      "description": "The GraphQL endpoint used by this app. Replace YOURAPPNAME with your 'herokuapp.com' hostname.",
+      "value": "https://YOURAPPNAME.herokuapp.com/graphql"
+    }
+  }
 }
