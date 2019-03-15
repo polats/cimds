@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "node --experimental-modules -r dotenv/config server",
-    "build": "dotenv next build",
-    "start": "dotenv next start"
+    "start": "node --experimental-modules -r dotenv/config server"
   },
   "keywords": [],
   "license": "MIT",
