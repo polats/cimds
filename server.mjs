@@ -7,12 +7,15 @@ import queries from './playgroundQueries'
 
 import cors from '@koa/cors'
 import mongoose from 'mongoose'
+import Grid from 'gridfs-stream'
 import next from 'next'
 
 const initDB = () => {
-  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-  mongoose.connection.once('open', () => {
-    console.log('connected to database');
+  Grid.mongo = mongoose.mongo
+
+  var conn = mongoose.createConnection(process.env.MONGODB_URI, { useNewUrlParser: true });
+  conn.once('open', () => {
+    var gfs = Grid(conn.db)
   });
 }
 

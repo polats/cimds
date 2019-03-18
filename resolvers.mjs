@@ -6,8 +6,9 @@ import mkdirp from 'mkdirp'
 import promisesAll from 'promises-all'
 import shortid from 'shortid'
 import _ from 'lodash'
+import mongoose from 'mongoose'
+import Grid from 'gridfs-stream'
 
-import xd from './exampleData'
 import ItemDefinition from './models/itemDefinition'
 import ItemInstance from './models/itemInstance'
 
@@ -106,31 +107,15 @@ const getAllItems = () => {
   })
 }
 
-const lookUpItem = (args) => {
-  var def = _.filter(xd.itemDefinitions, {def_id: xd.itemInstances[args.id-1].def_id})[0];
-  var obj = {
-    id: args.id,
-    name: def.name,
-    description: def.description,
-    image: def.description
-  }
-  return obj
-}
-
-const itemInstances = () => {
-  return xd.itemInstances
-}
-
 export default {
   Upload: apolloServerKoa.GraphQLUpload,
 
   // queries
   Query: {
-    uploads: () => db.get('uploads').value(),
+    uploads: () => {console.log(db.get('uploads').value()); return db.get('uploads').value()},
     itemDefinitions: () => {return ItemDefinition.find({})},
     itemInstances: () => {return ItemInstance.find({})},
-    allItems: () => getAllItems(),
-    lookUpItem: (obj, args) => lookUpItem(args)
+    allItems: () => getAllItems()
   },
 
   // mutations

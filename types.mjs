@@ -40,7 +40,6 @@ export default /* GraphQL */ `
     allItems: [ItemLookup]
     itemDefinitions: [ItemDefinition]
     itemInstances: [ItemInstance]
-    lookUpItem(id: String!): ItemLookup
   }
 
   type Mutation {

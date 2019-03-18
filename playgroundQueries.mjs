@@ -27,16 +27,6 @@ export default {
     }
   }`,
 
-  lookUpItem :
-  `query {
-    lookUpItem(id:"2")
-  	{
-      id
-      name
-      description
-      image
-    }
-  }`,
   addItemDefinition :
   `mutation {
   addItemDefinition(input: {
