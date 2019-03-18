@@ -35,20 +35,26 @@ filedb.defaults({ uploads: [] }).write()
 // Ensure upload directory exists.
 mkdirp.sync(UPLOAD_DIR)
 
-const storeFS = ({ stream, filename }) => {
-  const id = shortid.generate()
-  const path = `${UPLOAD_DIR}/${id}-${filename}`
+const storeFS = ({ stream, filename, mimetype }) => {
+
+  var writeStream = gfs.createWriteStream({
+    filename: filename,
+    mode: 'w',
+    content_type: mimetype
+  })
+
+  stream
+    .on('error', error => {
+      if (stream.truncated)
+        // Delete the truncated file.
+        fs.unlinkSync(path)
+      reject(error)
+    })
+    .pipe(writeStream)
+
   return new Promise((resolve, reject) =>
-    stream
-      .on('error', error => {
-        if (stream.truncated)
-          // Delete the truncated file.
-          fs.unlinkSync(path)
-        reject(error)
-      })
-      .pipe(fs.createWriteStream(path))
-      .on('error', error => reject(error))
-      .on('finish', () => resolve({ id, path }))
+      writeStream.on('error', error => reject(error))
+      .on('close', file => resolve(file))
   )
 }
 
@@ -62,8 +68,16 @@ const storeDB = file =>
 const processUpload = async upload => {
   const { createReadStream, filename, mimetype } = await upload
   const stream = createReadStream()
-  const { id, path } = await storeFS({ stream, filename })
-  return storeDB({ id, filename, mimetype, path })
+  const file = await storeFS({ stream, filename, mimetype })
+
+  var obj = {
+    id: shortid.generate(),
+    filename: file.filename,
+    mimetype: file.contentType,
+    path: "/" + filename
+  }
+
+  return obj
 }
 
 const addItemDefinition = (input) => {
@@ -126,7 +140,7 @@ export default {
 
   // queries
   Query: {
-    uploads: () => {console.log(filedb.get('uploads').value()); return filedb.get('uploads').value()},
+    uploads: () => {return filedb.get('uploads').value()},
     itemDefinitions: () => {return ItemDefinition.find({})},
     itemInstances: () => {return ItemInstance.find({})},
     allItems: () => getAllItems()
