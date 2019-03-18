@@ -3,10 +3,9 @@ import gql from 'graphql-tag'
 export default gql`
   query uploads {
     uploads {
-      id
+      _id
       filename
-      mimetype
-      path
+      contentType
     }
   }
 `

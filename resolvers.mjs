@@ -1,10 +1,6 @@
 import fs from 'fs'
 import apolloServerKoa from 'apollo-server-koa'
-import lowdb from 'lowdb'
-import FileSync from 'lowdb/adapters/FileSync'
-import mkdirp from 'mkdirp'
 import promisesAll from 'promises-all'
-import shortid from 'shortid'
 import _ from 'lodash'
 import mongoose from 'mongoose'
 import Grid from 'gridfs-stream'
@@ -12,14 +8,12 @@ import Grid from 'gridfs-stream'
 import ItemDefinition from './models/itemDefinition'
 import ItemInstance from './models/itemInstance'
 
-const UPLOAD_DIR = './uploads'
-const filedb = lowdb(new FileSync('db.json'))
-
 var gfs; // gridfs
+var mc; // mongoose connection
 
 const initDB = () => {
   Grid.mongo = mongoose.mongo
-  var mc = mongoose.connection;
+  mc = mongoose.connection;
 
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
   mc.once('open', () => {
@@ -28,12 +22,8 @@ const initDB = () => {
 
 }
 
-// Seed an empty DB.
+// Initialize DB
 initDB()
-filedb.defaults({ uploads: [] }).write()
-
-// Ensure upload directory exists.
-mkdirp.sync(UPLOAD_DIR)
 
 const storeFS = ({ stream, filename, mimetype }) => {
 
@@ -45,9 +35,6 @@ const storeFS = ({ stream, filename, mimetype }) => {
 
   stream
     .on('error', error => {
-      if (stream.truncated)
-        // Delete the truncated file.
-        fs.unlinkSync(path)
       reject(error)
     })
     .pipe(writeStream)
@@ -58,23 +45,16 @@ const storeFS = ({ stream, filename, mimetype }) => {
   )
 }
 
-const storeDB = file =>
-  filedb
-    .get('uploads')
-    .push(file)
-    .last()
-    .write()
-
 const processUpload = async upload => {
   const { createReadStream, filename, mimetype } = await upload
   const stream = createReadStream()
   const file = await storeFS({ stream, filename, mimetype })
 
   var obj = {
-    id: shortid.generate(),
+    id: file._id,
     filename: file.filename,
     mimetype: file.contentType,
-    path: "/" + filename
+    path: "/" + file._id
   }
 
   return obj
@@ -135,12 +115,19 @@ const getAllItems = () => {
   })
 }
 
+export async function getAllFiles() {
+  const allFiles = await gfs.files.find({}).toArray()
+  return allFiles
+}
+
 export default {
   Upload: apolloServerKoa.GraphQLUpload,
 
   // queries
   Query: {
-    uploads: () => {return filedb.get('uploads').value()},
+    async uploads() {
+      return await getAllFiles()
+    },
     itemDefinitions: () => {return ItemDefinition.find({})},
     itemInstances: () => {return ItemInstance.find({})},
     allItems: () => getAllItems()

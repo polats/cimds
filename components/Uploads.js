@@ -8,14 +8,12 @@ const Uploads = ({ data: { uploads = [] } }) => (
       <tr>
         <Head>Filename</Head>
         <Head>MIME type</Head>
-        <Head>Path</Head>
       </tr>
     }
-    tbody={uploads.map(({ id, filename, mimetype, path }) => (
-      <tr key={id}>
+    tbody={uploads.map(({ _id, filename, contentType }) => (
+      <tr key={_id}>
         <Cell>{filename}</Cell>
-        <Cell>{mimetype}</Cell>
-        <Cell>{path}</Cell>
+        <Cell>{contentType}</Cell>
       </tr>
     ))}
   />
