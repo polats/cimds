@@ -6,18 +6,7 @@ import typeDefs from './types'
 import queries from './playgroundQueries'
 
 import cors from '@koa/cors'
-import mongoose from 'mongoose'
-import Grid from 'gridfs-stream'
 import next from 'next'
-
-const initDB = () => {
-  Grid.mongo = mongoose.mongo
-
-  var conn = mongoose.createConnection(process.env.MONGODB_URI, { useNewUrlParser: true });
-  conn.once('open', () => {
-    var gfs = Grid(conn.db)
-  });
-}
 
 var tabProps = []
 
@@ -34,9 +23,7 @@ const prepareTabs = () => {
   )
 }
 
-
 // start initialization
-initDB()
 prepareTabs()
 
 const dev = process.env.NODE_ENV !== 'production'

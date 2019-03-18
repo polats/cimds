@@ -13,10 +13,24 @@ import ItemDefinition from './models/itemDefinition'
 import ItemInstance from './models/itemInstance'
 
 const UPLOAD_DIR = './uploads'
-const db = lowdb(new FileSync('db.json'))
+const filedb = lowdb(new FileSync('db.json'))
+
+var gfs; // gridfs
+
+const initDB = () => {
+  Grid.mongo = mongoose.mongo
+  var mc = mongoose.connection;
+
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+  mc.once('open', () => {
+    gfs = Grid(mc.db)
+  });
+
+}
 
 // Seed an empty DB.
-db.defaults({ uploads: [] }).write()
+initDB()
+filedb.defaults({ uploads: [] }).write()
 
 // Ensure upload directory exists.
 mkdirp.sync(UPLOAD_DIR)
@@ -39,7 +53,7 @@ const storeFS = ({ stream, filename }) => {
 }
 
 const storeDB = file =>
-  db
+  filedb
     .get('uploads')
     .push(file)
     .last()
@@ -112,7 +126,7 @@ export default {
 
   // queries
   Query: {
-    uploads: () => {console.log(db.get('uploads').value()); return db.get('uploads').value()},
+    uploads: () => {console.log(filedb.get('uploads').value()); return filedb.get('uploads').value()},
     itemDefinitions: () => {return ItemDefinition.find({})},
     itemInstances: () => {return ItemInstance.find({})},
     allItems: () => getAllItems()
