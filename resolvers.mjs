@@ -1,33 +1,14 @@
-import fs from 'fs'
 import apolloServerKoa from 'apollo-server-koa'
 import promisesAll from 'promises-all'
 import _ from 'lodash'
-import mongoose from 'mongoose'
-import Grid from 'gridfs-stream'
 
 import ItemDefinition from './models/itemDefinition'
 import ItemInstance from './models/itemInstance'
-
-var gfs; // gridfs
-var mc; // mongoose connection
-
-const initDB = () => {
-  Grid.mongo = mongoose.mongo
-  mc = mongoose.connection;
-
-  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-  mc.once('open', () => {
-    gfs = Grid(mc.db)
-  });
-
-}
-
-// Initialize DB
-initDB()
+import connection from './database'
 
 const storeFS = ({ stream, filename, mimetype }) => {
 
-  var writeStream = gfs.createWriteStream({
+  var writeStream = connection.gfs.createWriteStream({
     filename: filename,
     mode: 'w',
     content_type: mimetype
@@ -109,7 +90,7 @@ const getAllItems = () => {
 }
 
 export async function getAllFiles() {
-  const allFiles = await gfs.files.find({}).toArray()
+  const allFiles = await connection.gfs.files.find({}).toArray()
   return allFiles
 }
 

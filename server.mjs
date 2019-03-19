@@ -7,6 +7,7 @@ import queries from './playgroundQueries'
 
 import cors from '@koa/cors'
 import next from 'next'
+import connection from './database'
 
 var tabProps = []
 
@@ -55,12 +56,43 @@ app.prepare().then( () => {
 
   server.use(cors());
 
+  // Retrieve uploaded file
+  router.get('/file/:filename', async ctx => {
+
+    var findFile = () => {
+      return new Promise((resolve, reject) => {
+        connection.gfs.files.find({filename: ctx.params.filename}).toArray(function(err, files){
+          err ? reject(err)
+              : resolve(files[0])
+            });
+          });
+      };
+
+    var file = await findFile();
+
+    if(!file){
+      ctx.status = 404
+      return
+    }
+    
+    const readstream = connection.gfs.createReadStream({
+        filename: file.filename
+    });
+
+    ctx.status = 200
+    ctx.type = file.contentType
+    ctx.body = readstream
+
+  });
+
   router.get("*", async ctx => {
     if (!ctx.path.match(/graphql/)) {
       await handle(ctx.req, ctx.res);
       ctx.respond = false;
     }
   });
+
+
 
   server.use(router.routes());
 

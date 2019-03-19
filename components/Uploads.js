@@ -12,7 +12,7 @@ const Uploads = ({ data: { uploads = [] } }) => (
     }
     tbody={uploads.map(({ _id, filename, contentType }) => (
       <tr key={_id}>
-        <Cell>{filename}</Cell>
+        <Cell><a href={"/file/" + filename}>{filename}</a></Cell>
         <Cell>{contentType}</Cell>
       </tr>
     ))}
