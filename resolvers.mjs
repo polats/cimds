@@ -50,14 +50,7 @@ const processUpload = async upload => {
   const stream = createReadStream()
   const file = await storeFS({ stream, filename, mimetype })
 
-  var obj = {
-    id: file._id,
-    filename: file.filename,
-    mimetype: file.contentType,
-    path: "/" + file._id
-  }
-
-  return obj
+  return file
 }
 
 const addItemDefinition = (input) => {

@@ -30,10 +30,9 @@ const UploadFile = ({ mutate }) => {
 export default graphql(gql`
   mutation($file: Upload!) {
     singleUpload(file: $file) {
-      id
+      _id
       filename
-      mimetype
-      path
+      contentType
     }
   }
 `)(UploadFile)

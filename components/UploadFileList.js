@@ -25,10 +25,9 @@ const UploadFileList = ({ mutate }) => {
 export default graphql(gql`
   mutation($files: [Upload!]!) {
     multipleUpload(files: $files) {
-      id
+      _id
       filename
-      mimetype
-      path
+      contentType
     }
   }
 `)(UploadFileList)

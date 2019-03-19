@@ -1,12 +1,5 @@
 export default /* GraphQL */ `
   type File {
-    id: ID!
-    path: String!
-    filename: String!
-    mimetype: String!
-  }
-
-  type UploadedFile {
     _id: ID!
     filename: String!
     contentType: String!
@@ -42,7 +35,7 @@ export default /* GraphQL */ `
   }
 
   type Query {
-    uploads: [UploadedFile]
+    uploads: [File]
     allItems: [ItemLookup]
     itemDefinitions: [ItemDefinition]
     itemInstances: [ItemInstance]
