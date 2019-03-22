@@ -49,6 +49,7 @@ const addItemDefinition = (input) => {
 const addItemInstance = (input) => {
 
   const newItemInstance = new ItemInstance({
+    collection_id: input.collection_id,
     def_id: input.def_id
   })
 
@@ -66,7 +67,6 @@ const getAllItems = () => {
      })
 
      var allItems = []
-     var index = 1
 
      return ItemDefinition.find()
        .where('_id')
@@ -74,13 +74,16 @@ const getAllItems = () => {
        .exec()
        .then(itemDefinitions => {
 
-         itemDefIds.map(itemDefId => {
-           var itemDefinition = itemDefinitions.find(obj => obj._id.equals(itemDefId))
+         itemInstances.map(itemInstance => {
+           var itemDefinition = itemDefinitions.find(obj => obj._id.equals(itemInstance.def_id))
 
             var item = {
-              id: index++,
+              id: itemInstance.collection_id,
+              instance_id: itemInstance._id,
               name: itemDefinition.name,
-              description: itemDefinition.description
+              description: itemDefinition.description,
+              external_url: itemDefinition.external_url,
+              image: itemDefinition.image
             }
 
             allItems.push(item)
@@ -128,6 +131,6 @@ export default {
     },
 
     addItemDefinition: (root, args) => addItemDefinition(args.input),
-    addItemInstance: (root, args) => addItemInstance(args)
+    addItemInstance: (root, args) => addItemInstance(args.input)
   }
 }

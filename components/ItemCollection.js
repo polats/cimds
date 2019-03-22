@@ -1,8 +1,8 @@
 import { graphql } from 'react-apollo'
-import itemdefQuery from '../queries/itemDefinitions'
+import allItemsQuery from '../queries/allItems'
 import { Table, Head, Cell } from './Table'
 
-const ItemDefinitions = ({ data: { itemDefinitions = [] } }) => (
+const ItemCollection = ({ data: { allItems = [] } }) => (
   <Table
     thead={
       <tr>
@@ -13,8 +13,8 @@ const ItemDefinitions = ({ data: { itemDefinitions = [] } }) => (
         <Head>Image</Head>
       </tr>
     }
-    tbody={itemDefinitions.map(({ id, name, description, external_url, image }) => (
-      <tr key={id}>
+    tbody={allItems.map(({ instance_id, id, name, description, external_url, image }) => (
+      <tr key={instance_id}>
         <Cell>{id}</Cell>
         <Cell>{name}</Cell>
         <Cell>{description}</Cell>
@@ -25,4 +25,4 @@ const ItemDefinitions = ({ data: { itemDefinitions = [] } }) => (
   />
 )
 
-export default graphql(itemdefQuery)(ItemDefinitions)
+export default graphql(allItemsQuery)(ItemCollection)

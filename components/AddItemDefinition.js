@@ -7,6 +7,7 @@ import Field from './Field'
 import UploadDropdown from './UploadDropdown'
 
 class AddItemDefinition extends Component {
+
   state = {
     name: '',
     description: '',
@@ -18,15 +19,12 @@ class AddItemDefinition extends Component {
     this.setState({ [name]: value })
 
   handleFileChange = (e) =>
-    this.setState({ image: e.value})
-
+    this.setState({ image: window.location.href + "file/" + e.value})
 
   handleSubmit = event => {
     event.preventDefault()
 
     const itemDefinition = this.state
-
-    console.log(itemDefinition)
 
     this.props.mutate({
 
@@ -75,7 +73,7 @@ class AddItemDefinition extends Component {
         </Field>
 
         Image / 3D File
-        <UploadDropdown name="image"
+        <UploadDropdown
          onChange = {this.handleFileChange}
         />
         <button>Add Item Definition</button>
@@ -87,6 +85,7 @@ class AddItemDefinition extends Component {
 export default graphql(gql`
   mutation($itemDefinition: ItemDefinitionInput!) {
     addItemDefinition(input: $itemDefinition) {
+      id
       name
       description
       external_url

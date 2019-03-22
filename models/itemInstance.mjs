@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 
 const itemInstanceSchema = new mongoose.Schema({
+  collection_id: {
+    type: String,
+    required: true
+  },
   def_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ItemDefinition',

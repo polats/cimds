@@ -22,14 +22,22 @@ export default /* GraphQL */ `
 
   type ItemInstance {
     id: ID!
+    collection_id: String!
+    def_id: String!
+  }
+
+  input ItemInstanceInput {
+    collection_id: String!
     def_id: String!
   }
 
   type ItemLookup {
+    instance_id: String!
     id: String!
     name: String!
     description: String!
-    image: String!
+    external_url: String
+    image: String
   }
 
   type Query {
@@ -43,7 +51,7 @@ export default /* GraphQL */ `
     singleUpload(file: Upload!): File!
     multipleUpload(files: [Upload!]!): [File!]!
     addItemDefinition(input: ItemDefinitionInput!): ItemDefinition
-    addItemInstance(def_id: String!): ItemInstance
+    addItemInstance(input: ItemInstanceInput!): ItemInstance
   }
 
 

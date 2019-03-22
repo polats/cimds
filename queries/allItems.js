@@ -1,8 +1,9 @@
 import gql from 'graphql-tag'
 
 export default gql`
-  query itemDefinitions {
-    itemDefinitions {
+  query allItems {
+    allItems {
+      instance_id
       id
       name
       description

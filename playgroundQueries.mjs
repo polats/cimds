@@ -1,12 +1,15 @@
 // default graphQL playground queries
 export default {
-  allItems:
+  itemCollection:
   `
   query {
     allItems {
+      instance_id
       id
       name
       description
+      external_url
+      image
     }
   }
   `,
@@ -16,6 +19,8 @@ export default {
       id
       name
       description
+      external_url
+      image
     }
   }`,
 
@@ -23,6 +28,7 @@ export default {
   `query {
     itemInstances {
       id
+      collection_id
       def_id
     }
   }`,
@@ -41,11 +47,13 @@ export default {
 }`,
   addItemInstance :
   `mutation {
-  addItemInstance(
-    def_id: "5c86887825a663510c7a37a2",
-  )
+  addItemInstance(input: {
+    collection_id: "1",
+    def_id: "5c9481d67f270061f48fdea3",
+  })
   {
     id
+    collection_id
     def_id
   }
 }`

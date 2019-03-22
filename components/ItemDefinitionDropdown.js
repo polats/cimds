@@ -1,8 +1,8 @@
 import { Component } from 'react'
 import { graphql } from 'react-apollo'
-import uploadsQuery from '../queries/uploads'
+import itemDefinitionsQuery from '../queries/itemDefinitions'
 
-const UploadDropdown = function(props)
+const ItemDefinitionDropdown = function(props)
 {
   const handleChange = (e) => {
     props.onChange(e.target)
@@ -11,9 +11,9 @@ const UploadDropdown = function(props)
   return (
   <div className="form-group">
     <select onChange={handleChange} >
-      <option key="">Select file</option>
-    {props.data.uploads.map(({ filename, contentType }) => (
-      <option key={filename}>{filename}</option>
+      <option value="">Select Item Definition</option>
+    {props.data.itemDefinitions.map(({ id, name }) => (
+      <option value={id}>{name + " (" +id + ")"}</option>
     ))}
     </select>
   </div>
@@ -21,7 +21,7 @@ const UploadDropdown = function(props)
 
 }
 
-export default graphql(uploadsQuery)(UploadDropdown)
+export default graphql(itemDefinitionsQuery)(ItemDefinitionDropdown)
 
 
 /*
