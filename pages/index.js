@@ -5,6 +5,7 @@ import UploadBlob from '../components/UploadBlob'
 import UploadFile from '../components/UploadFile'
 import UploadFileList from '../components/UploadFileList'
 import Uploads from '../components/Uploads'
+import ItemDefinitions from '../components/ItemDefinitions'
 
 const IndexPage = () => (
   <Page title="Itemdef Server">
@@ -21,10 +22,10 @@ const IndexPage = () => (
       <Uploads />
     </Section>
     <Section heading="Item Definitions">
-      <Uploads />
+      <ItemDefinitions />
     </Section>
     <Section heading="Item Instances">
-      <Uploads />
+
     </Section>
   </Page>
 )

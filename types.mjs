@@ -9,12 +9,15 @@ export default /* GraphQL */ `
     id: ID!
     name: String!
     description: String!
+    external_url: String
+    image: String
   }
 
   input ItemDefinitionInput {
     name: String!
     description: String!
-    image: String!
+    external_url: String
+    image: String
   }
 
   type ItemInstance {
@@ -27,11 +30,6 @@ export default /* GraphQL */ `
     name: String!
     description: String!
     image: String!
-  }
-
-  input CreateGadgetInput {
-    name: String!
-    release_date: String!
   }
 
   type Query {

@@ -24,6 +24,10 @@ class AddItemDefinition extends Component {
   handleChange = ({ target: { name, value } }) =>
     this.setState({ [name]: value })
 
+  handleFileChange = (e) =>
+    this.setState({ image: e.value})
+
+
   handleSubmit = event => {
     event.preventDefault()
 
@@ -70,14 +74,15 @@ class AddItemDefinition extends Component {
           <input
             name="external_url"
             placeholder="external_url (https://game.site)"
-            required
             value={this.state.external_url}
             onChange={this.handleChange}
           />{' '}
         </Field>
 
         Image / 3D File
-        <UploadDropdown/>
+        <UploadDropdown name="image"
+         onChange = {this.handleFileChange}
+        />
         <button>Add Item Definition</button>
       </form>
     )
@@ -85,11 +90,12 @@ class AddItemDefinition extends Component {
 }
 
 export default graphql(gql`
-  mutation($file: Upload!) {
-    singleUpload(file: $file) {
-      _id
-      filename
-      contentType
+  mutation AddItemDefinition($itemdef: ItemDefinitionInput!) {
+    addItemDefinition(itemdef: $itemdef) {
+      name
+      description
+      external_url
+      image
     }
   }
 `)(AddItemDefinition)
