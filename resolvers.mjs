@@ -38,7 +38,9 @@ const addItemDefinition = (input) => {
 
   const newItemDefinition = new ItemDefinition({
     name: input.name,
-    description: input.description
+    description: input.description,
+    external_url: input.external_url,
+    image: input.image
   })
 
   return newItemDefinition.save()

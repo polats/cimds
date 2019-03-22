@@ -11,7 +11,8 @@ const UploadDropdown = function(props)
   return (
   <div className="form-group">
     <select name="image" onChange={handleChange} >
-    {props.data.uploads.map(({ _id, filename, contentType }) => (
+      <option key="">Select file</option>
+    {props.data.uploads.map(({ filename, contentType }) => (
       <option key={filename}>{filename}</option>
     ))}
     </select>

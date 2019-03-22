@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import { Component } from 'react'
 import { graphql } from 'react-apollo'
-import uploadsQuery from '../queries/uploads'
+import itemDefinitionsQuery from '../queries/itemDefinitions'
 
 import Field from './Field'
 import UploadDropdown from './UploadDropdown'
@@ -14,13 +14,6 @@ class AddItemDefinition extends Component {
     image: ''
     }
 
-  uploads = [
-    {
-      _id: 1,
-      filename: "1.png"
-    }]
-
-
   handleChange = ({ target: { name, value } }) =>
     this.setState({ [name]: value })
 
@@ -31,20 +24,22 @@ class AddItemDefinition extends Component {
   handleSubmit = event => {
     event.preventDefault()
 
-    const file = new Blob([this.state.content], { type: 'text/plain' })
-    file.name = `${this.state.name}.txt`
+    const itemDefinition = this.state
+
+    console.log(itemDefinition)
 
     this.props.mutate({
-      variables: { file },
+
+      variables: { itemDefinition },
       update(
         proxy,
         {
-          data: { singleUpload }
+          data: { addItemDefinition }
         }
       ) {
-        const data = proxy.readQuery({ query: uploadsQuery })
-        data.uploads.push(singleUpload)
-        proxy.writeQuery({ query: uploadsQuery, data })
+        const data = proxy.readQuery({ query: itemDefinitionsQuery })
+        data.itemDefinitions.push(addItemDefinition)
+        proxy.writeQuery({ query: itemDefinitionsQuery, data })
       }
     })
   }
@@ -90,8 +85,8 @@ class AddItemDefinition extends Component {
 }
 
 export default graphql(gql`
-  mutation AddItemDefinition($itemdef: ItemDefinitionInput!) {
-    addItemDefinition(itemdef: $itemdef) {
+  mutation($itemDefinition: ItemDefinitionInput!) {
+    addItemDefinition(input: $itemDefinition) {
       name
       description
       external_url

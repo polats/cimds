@@ -12,8 +12,8 @@ const ItemDefinitions = ({ data: { itemDefinitions = [] } }) => (
         <Head>Image</Head>
       </tr>
     }
-    tbody={itemDefinitions.map(({ id, name, description, external_url, image }) => (
-      <tr key={id}>
+    tbody={itemDefinitions.map(({ name, description, external_url, image }) => (
+      <tr key={name}>
         <Cell>{name}</Cell>
         <Cell>{description}</Cell>
         <Cell>{external_url}</Cell>
