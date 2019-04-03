@@ -18,6 +18,9 @@
     "node": "10.15.3"
   },
   "browserslist": "> 0.5%, not dead, node 8.6",
+  "devDependencies": {
+    "truffle-contract": "^3.0.0"
+  },
   "dependencies": {
     "@koa/cors": "^2.2.3",
     "@zeit/next-css": "^1.0.1",

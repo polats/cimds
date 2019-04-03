@@ -9,9 +9,11 @@ import AddItemDefinition from '../components/AddItemDefinition'
 import ItemInstances from '../components/ItemInstances'
 import ItemCollection from '../components/ItemCollection'
 import AddItemToCollection from '../components/AddItemToCollection'
+import Web3Initializer from '../components/Web3Initializer'
 
 const IndexPage = () => (
   <Page title="Itemdef Server">
+    <Web3Initializer/>
     <Section heading="Upload Image / 3D File">
       <UploadDroppedFile />
     </Section>
