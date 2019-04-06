@@ -16,7 +16,7 @@
     "url": "https://polats.com"
   },
   "engines": {
-    "node": ">=10"
+    "node": "10.15.3"
   },
   "dependencies": {
     "apollo-server-express": "^2.1.0",
