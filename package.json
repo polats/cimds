@@ -2,13 +2,12 @@
   "name": "itemdef-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "bootstrap": "npm install && (cp -n .env.dist .env || true) && (cp -n .env.docker.dist .env.docker || true)",
-    "dev": "nodemon .",
+    "dev": "node --experimental-modules -r dotenv/config .",
     "build": "next build",
-    "start": "node ."
+    "start": "node --experimental-modules -r dotenv/config ."
   },
   "author": {
     "name": "Paul Gadi",
@@ -36,7 +35,7 @@
     "mailgun-js": "^0.21.0",
     "mongodb": "^3.1.10",
     "morgan": "^1.9.0",
-    "next": "^7.0.2",
+    "next": "^8.0.4",
     "node-wait-for-it": "^0.2.0",
     "nodeify": "^1.0.1",
     "ooth": "^2.9.0",

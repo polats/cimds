@@ -1,25 +1,24 @@
-require('dotenv').config();
-const next = require('next');
-const express = require('express');
-const session = require('express-session');
-const connectRedis = require('connect-redis');
-const { MongoClient, ObjectId } = require('mongodb');
-const cookieParser = require('cookie-parser');
+import next from 'next'
+import express from 'express'
+import session from 'express-session'
+import connectRedis from 'connect-redis'
+import mongodb from 'mongodb'
+import cookieParser from 'cookie-parser'
 
-const { Ooth } = require('ooth');
-const { OothMongo } = require('ooth-mongo');
-const oothLocal = require('ooth-local').default;
-const oothUser = require('ooth-user').default;
-const oothFacebook = require('ooth-facebook').default;
-const oothGoogle = require('ooth-google').default;
-const oothTwitter = require('ooth-twitter').default;
-const emailer = require('ooth-local-emailer').default;
-const morgan = require('morgan');
-const cors = require('cors');
-const mail = require('./mail');
+import Ooth from 'ooth'
+import OothMongo from 'ooth-mongo'
+import oothLocal from 'ooth-local'
+import oothUser from 'ooth-user'
+import oothFacebook from 'ooth-facebook'
+import oothGoogle from 'ooth-google'
+import oothTwitter from 'ooth-twitter'
+import emailer from 'ooth-local-emailer'
+import morgan from 'morgan'
+import cors from 'cors'
+import mail from './mail'
 
-const passport = require('passport');
-const { ApolloServer } = require('apollo-server-express');
+import passport from 'passport'
+import ase from 'apollo-server-express'
 
 const prepare = (o) => {
   if (o) {
@@ -29,73 +28,11 @@ const prepare = (o) => {
 };
 
 const start = async () => {
-  /*
-  try {
-
-
-    const app = express();
-    app.use(morgan('dev'));
-
-    const corsMiddleware = {
-      origin: process.env.ORIGIN_URL,
-      credentials: true,
-      preflightContinue: false,
-    };
-    app.use(cors(corsMiddleware));
-    app.options(cors(corsMiddleware));
-
-    app.use(cookieParser());
-    const RedisStore = connectRedis(session);
-    app.use(
-      session({
-        name: 'app-session-id',
-        store: new RedisStore({
-          host: process.env.REDIS_HOST,
-          port: process.env.REDIS_PORT,
-        }),
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: true,
-      }),
-    );
-    app.use(passport.initialize());
-    app.use(passport.session());
-    passport.serializeUser((userId, done) => {
-      done(null, userId);
-    });
-    passport.deserializeUser((userId, done) => {
-      done(null, userId);
-    });
-
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: ({ req }) => ({
-        userId: req.user,
-      }),
-      playground: {
-        settings: {
-          'editor.cursorShape': 'line',
-        },
-      },
-    });
-
-    server.applyMiddleware({
-      app,
-      path: '/api',
-      cors: corsMiddleware,
-    });
-
-    app.listen(process.env.PORT, () => {
-      console.info(`API online at ${process.env.HOST}:${process.env.PORT}`);
-    });
-  } catch (e) {
-    console.error(e);
-  }
-};
-  */
 
   try {
+    const MongoClient = mongodb.MongoClient;
+    const ObjectId = mongodb.ObjectId;
+
     const client = await MongoClient.connect(
       `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`,
       { useNewUrlParser: true },
@@ -221,7 +158,7 @@ const start = async () => {
       done(null, userId);
     });
 
-    const server = new ApolloServer({
+    const server = new ase.ApolloServer({
       typeDefs,
       resolvers,
       context: ({ req }) => ({
@@ -246,9 +183,9 @@ const start = async () => {
 
     await nextApp.prepare();
 
-    const oothMongo = new OothMongo(db);
+    const oothMongo = new OothMongo.OothMongo(db);
 
-    const ooth = new Ooth({
+    const ooth = new Ooth.Ooth({
       app,
       path: '/auth',
       backend: oothMongo,
@@ -263,8 +200,10 @@ const start = async () => {
         saveUninitialized: true,
       }),
     });
-    oothUser({ ooth });
-    oothLocal({ ooth });
+
+    oothUser.default({ ooth });
+    oothLocal.default({ ooth });
+
     if (process.env.MAIL_FROM) {
       emailer({
         ooth,
