@@ -1,38 +1,31 @@
-import Page from '../components/Page'
-import Section from '../components/Section'
-import UploadBlob from '../components/UploadBlob'
-import UploadDroppedFile from '../components/UploadDroppedFile'
-import UploadFileList from '../components/UploadFileList'
-import Uploads from '../components/Uploads'
-import ItemDefinitions from '../components/ItemDefinitions'
-import AddItemDefinition from '../components/AddItemDefinition'
-import ItemInstances from '../components/ItemInstances'
-import ItemCollection from '../components/ItemCollection'
-import AddItemToCollection from '../components/AddItemToCollection'
-import Web3Initializer from '../components/Web3Initializer'
+import Layout from '../components/layout'
+import withPage from '../providers/page'
 
-const IndexPage = () => (
-  <Page title="Itemdef Server">
-    <Web3Initializer/>
-    <Section heading="Upload Image / 3D File">
-      <UploadDroppedFile />
-    </Section>
-    <Section heading="Create Item Definition">
-      <AddItemDefinition />
-    </Section>
-    <Section heading="Add Item to Collection">
-      <AddItemToCollection />
-    </Section>
-    <Section heading="Uploads">
-      <Uploads />
-    </Section>
-    <Section heading="Item Definitions">
-      <ItemDefinitions />
-    </Section>
-    <Section heading="Item Collection">
-      <ItemInstances />
-    </Section>
-  </Page>
-)
-
-export default IndexPage
+export default withPage(() => {
+  return <Layout title="Itemdef Server" page="home">
+        <div className="container">
+          <div className="jumbotron">
+              <h1>Itemdef Server</h1>
+              <p>Create virtual items on the blockchain</p>
+              <p><a className="btn btn-primary btn-lg" href="/about" role="button">Learn more &raquo;</a></p>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <h2>About</h2>
+              <p>Create virtual items on the blockchain</p>
+              <p><a className="btn btn-default" href="/about" role="button">Learn more &raquo;</a></p>
+            </div>
+            <div className="col-md-4">
+              <h2>User Accounts</h2>
+              <p>Makes use of Ooth for authentication</p>
+              <p><a className="btn btn-default" href="/register" role="button">Register &raquo;</a></p>
+            </div>
+            <div className="col-md-4">
+              <h2>Open Source</h2>
+              <p>This is an open source library</p>
+              <p><a className="btn btn-default" href="https://github.com/polats/itemdef-server" role="button">GitHub &raquo;</a></p>
+            </div>
+          </div>
+        </div>
+    </Layout>
+})
