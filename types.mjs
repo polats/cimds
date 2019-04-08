@@ -1,4 +1,28 @@
 export default /* GraphQL */ `
+  type User {
+    _id: ID!
+  }
+
+  type Post {
+    _id: ID!
+    authorId: ID!
+    title: String
+    content: String
+
+    author: User
+    comments: [Comment]!
+  }
+
+  type Comment {
+    _id: ID!
+    postId: ID!
+    authorId: ID
+    content: String
+
+    author: User
+    post: Post
+  }
+
   type File {
     _id: ID!
     filename: String!
@@ -41,6 +65,10 @@ export default /* GraphQL */ `
   }
 
   type Query {
+    me: User
+    post(_id: ID!): Post
+    posts: [Post]
+    comment(_id: ID!): Comment
     uploads: [File]
     allItems: [ItemLookup]
     itemDefinitions: [ItemDefinition]
@@ -52,7 +80,7 @@ export default /* GraphQL */ `
     multipleUpload(files: [Upload!]!): [File!]!
     addItemDefinition(input: ItemDefinitionInput!): ItemDefinition
     addItemInstance(input: ItemInstanceInput!): ItemInstance
+    createPost(title: String, content: String): Post
+    createComment(postId: ID!, content: String): Comment
   }
-
-
 `

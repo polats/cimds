@@ -19,13 +19,9 @@ import mail from './mail'
 
 import passport from 'passport'
 import ase from 'apollo-server-express'
-
-const prepare = (o) => {
-  if (o) {
-    o._id = o._id.toString();
-  }
-  return o;
-};
+import typeDefs from './types'
+import resolvers from './resolvers'
+import connection from './database'
 
 const start = async () => {
 
@@ -38,89 +34,6 @@ const start = async () => {
       { useNewUrlParser: true },
     );
     const db = client.db(process.env.MONGO_DB);
-
-    const Posts = db.collection('posts');
-    const Comments = db.collection('comments');
-
-    const typeDefs = [
-      `
-            type Query {
-                me: User
-                post(_id: ID!): Post
-                posts: [Post]
-                comment(_id: ID!): Comment
-            }
-            type User {
-                _id: ID!
-            }
-            type Post {
-                _id: ID!
-                authorId: ID!
-                title: String
-                content: String
-
-                author: User
-                comments: [Comment]!
-            }
-            type Comment {
-                _id: ID!
-                postId: ID!
-                authorId: ID
-                content: String
-
-                author: User
-                post: Post
-            }
-            type Mutation {
-                createPost(title: String, content: String): Post
-                createComment(postId: ID!, content: String): Comment
-            }
-            schema {
-                query: Query
-                mutation: Mutation
-            }
-        `,
-    ];
-
-    const resolvers = {
-      Query: {
-        me: async (root, args, { userId }) => {
-          if (!userId) {
-            return null;
-          }
-          return {
-            _id: userId,
-          };
-        },
-        post: async (root, { _id }) => prepare(await Posts.findOne(ObjectId(_id))),
-        posts: async (root, args, context) => (await Posts.find({}).toArray()).map(prepare),
-        comment: async (root, { _id }) => prepare(await Comments.findOne(ObjectId(_id))),
-      },
-      Post: {
-        comments: async ({ _id }) => (await Comments.find({ postId: _id }).toArray()).map(prepare),
-      },
-      Comment: {
-        post: async ({ postId }) => prepare(await Posts.findOne(ObjectId(postId))),
-      },
-      Mutation: {
-        createPost: async (root, args, { userId }, info) => {
-          if (!userId) {
-            throw new Error('User not logged in.');
-          }
-          args.authorId = userId;
-          const { insertedId } = await Posts.insertOne(args);
-          return prepare(await Posts.findOne(ObjectId(insertedId)));
-        },
-        createComment: async (root, args, { userId }) => {
-          if (!userId) {
-            throw new Error('User not logged in.');
-          }
-          args.authorId = userId;
-          const { insertedId } = await Comments.insertOne(args);
-          return prepare(await Comments.findOne(ObjectId(insertedId)));
-        },
-      },
-    };
 
     const app = express();
     app.use(morgan('dev'));
