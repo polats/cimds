@@ -17,6 +17,11 @@
   "engines": {
     "node": "10.15.3"
   },
+  "devDependencies": {
+    "babili-webpack-plugin": "^0.1.2",
+    "nodemon": "^1.18.7",
+    "truffle-contract": "^3.0.0"
+  },
   "dependencies": {
     "apollo-server-express": "^2.1.0",
     "body-parser": "^1.18.2",
@@ -61,10 +66,7 @@
     "react": "^16.6.3",
     "react-apollo": "^2.3.1",
     "react-dom": "^16.6.3",
+    "react-dropzone": "^10.1.0",
     "staart": "^4.4.2"
-  },
-  "devDependencies": {
-    "babili-webpack-plugin": "^0.1.2",
-    "nodemon": "^1.18.7"
   }
 }

@@ -1,3 +1,6 @@
+import Layout from '../components/layout'
+import withPage from '../providers/page'
+
 import Page from '../components/Page'
 import Section from '../components/Section'
 import UploadBlob from '../components/UploadBlob'
@@ -11,9 +14,11 @@ import ItemCollection from '../components/ItemCollection'
 import AddItemToCollection from '../components/AddItemToCollection'
 import Web3Initializer from '../components/Web3Initializer'
 
-const IndexPage = () => (
-  <Page title="Itemdef Server">
-    <Web3Initializer/>
+export default withPage(() => (
+  <Layout title="Items" page="items">
+    {/*
+      <Web3Initializer/>
+    */}
     <Section heading="Upload Image / 3D File">
       <UploadDroppedFile />
     </Section>
@@ -32,7 +37,5 @@ const IndexPage = () => (
     <Section heading="Item Collection">
       <ItemInstances />
     </Section>
-  </Page>
-)
-
-export default IndexPage
+  </Layout>
+))

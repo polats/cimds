@@ -8,6 +8,11 @@ const menu = [
     label: 'Home',
   },
   {
+    url: '/items',
+    name: 'items',
+    label: 'Items',
+  },
+  {
     url: '/about',
     name: 'about',
     label: 'About',
