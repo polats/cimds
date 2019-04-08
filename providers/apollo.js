@@ -7,5 +7,5 @@ const {
 } = getConfig();
 
 export default withApollo({
-  url: `${(serverRuntimeConfig && serverRuntimeConfig.url) || url}/api`,
+  url: `${(serverRuntimeConfig && serverRuntimeConfig.url) || url}/graphql`,
 });

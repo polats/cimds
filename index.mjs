@@ -6,7 +6,6 @@ import cookieParser from 'cookie-parser'
 
 import morgan from 'morgan'
 import cors from 'cors'
-import mail from './mail'
 
 import passport from 'passport'
 import ase from 'apollo-server-express'
@@ -14,12 +13,32 @@ import typeDefs from './types'
 import resolvers from './resolvers'
 import connection from './database'
 import authenticate from './authentication'
+import queries from './playgroundQueries'
+
+var tabProps = []
+
+// create default query & mutation tabs based on playgroundQueries.js
+const prepareTabs = () => {
+  Object.getOwnPropertyNames(queries).map(queryName => {
+      var tab = {
+        name: queryName,
+        endpoint: "",
+        query: queries[queryName]
+      }
+      tabProps.push(tab)
+    }
+  )
+}
 
 const start = async () => {
 
   try {
 
+    // start initialization
+    prepareTabs()
+
     const app = express();
+    var router = express.Router()
 
     app.use(morgan('dev'));
 
@@ -60,24 +79,6 @@ const start = async () => {
 
     await authenticate(app, sessionArgs);
 
-    const server = new ase.ApolloServer({
-      typeDefs,
-      resolvers,
-      context: ({ req }) => ({
-        userId: req.user,
-      }),
-      playground: {
-        settings: {
-          'editor.cursorShape': 'line',
-        },
-      },
-    });
-
-    server.applyMiddleware({
-      app,
-      path: '/api'
-    });
-
     const nextApp = next({
       dev: process.env.NODE_ENV !== 'production',
     });
@@ -85,7 +86,64 @@ const start = async () => {
 
     await nextApp.prepare();
 
-    app.get('*', (req, res) => handle(req, res));
+    // Retrieve uploaded file
+    app.get('/file/:filename', async (req, res) => {
+
+      var findFile = () => {
+        return new Promise((resolve, reject) => {
+          connection.gfs.files.find({filename: req.params.filename}).toArray(function(err, files){
+            err ? reject(err)
+                : resolve(files[0])
+              });
+            });
+        };
+
+      var file = await findFile();
+
+      var body = ''
+
+      if(!file){
+        res.status(404)
+        res.send(body)
+      }
+
+      else {
+
+        const readstream = connection.gfs.createReadStream({
+            filename: file.filename
+        });
+
+        res.status(200)
+        res.type(file.contentType)
+        readstream.pipe(res)
+      }
+
+    });
+
+    const server = new ase.ApolloServer({
+      typeDefs,
+      resolvers,
+      context: ({ req }) => ({
+        userId: req.user,
+      }),
+      playground: {
+        tabs: tabProps
+      },
+      uploads: {
+        maxFileSize: 10000000, // 10 MB
+        maxFiles: 20
+      }
+    });
+
+    server.applyMiddleware({
+      app,
+      path: '/graphql'
+    });
+
+    var router = express.Router()
+    app.get('*', (req, res) => handle(req, res) );
+    app.use(router)
+
 
     app.listen(process.env.PORT, process.env.HOST, function() {
       console.info(`itemdef server online at ${process.env.HOST}:${process.env.PORT}/`);
