@@ -12,7 +12,7 @@ const UploadDropdown = function(props)
   <div className="form-group">
     <select onChange={handleChange} >
       <option key="">Select file</option>
-    {props.data.uploads.map(({ filename, contentType }) => (
+    {props.data.uploads && props.data.uploads.map(({ filename, contentType }) => (
       <option key={filename}>{filename}</option>
     ))}
     </select>

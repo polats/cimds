@@ -14,28 +14,39 @@ import ItemCollection from '../components/ItemCollection'
 import AddItemToCollection from '../components/AddItemToCollection'
 import Web3Initializer from '../components/Web3Initializer'
 
+import UploadFile from '../components/UploadFile'
+
 export default withPage(() => (
+
   <Layout title="Items" page="items">
+  <Page>
     {/*
       <Web3Initializer/>
     */}
-    <Section heading="Upload Image / 3D File">
-      <UploadDroppedFile />
-    </Section>
-    <Section heading="Create Item Definition">
-      <AddItemDefinition />
-    </Section>
-    <Section heading="Add Item to Collection">
-      <AddItemToCollection />
-    </Section>
-    <Section heading="Uploads">
-      <Uploads />
-    </Section>
-    <Section heading="Item Definitions">
-      <ItemDefinitions />
-    </Section>
-    <Section heading="Item Collection">
-      <ItemInstances />
-    </Section>
-  </Layout>
+    <div className="container">
+      <Section heading="Upload Image / 3D File">
+      {/*
+        <UploadDroppedFile />
+      */}
+        <UploadFile />
+      </Section>
+      <Section heading="Create Item Definition">
+        <AddItemDefinition />
+      </Section>
+      <Section heading="Add Item to Collection">
+        <AddItemToCollection />
+      </Section>
+      <Section heading="Uploads">
+        <Uploads />
+      </Section>
+      <Section heading="Item Definitions">
+        <ItemDefinitions />
+      </Section>
+      <Section heading="Item Collection">
+        <ItemInstances />
+      </Section>
+    </div>
+  </Page>
+</Layout>
+
 ))

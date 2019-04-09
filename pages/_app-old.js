@@ -5,7 +5,6 @@ import { createUploadLink } from 'apollo-upload-client'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
 import { getDataFromTree, ApolloProvider } from 'react-apollo'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const createApolloClient = (cache = {}) =>
   new ApolloClient({

@@ -12,7 +12,7 @@ const ItemDefinitionDropdown = function(props)
   <div className="form-group">
     <select onChange={handleChange} >
       <option key ="" value="">Select Item Definition</option>
-    {props.data.itemDefinitions.map(({ id, name }) => (
+    {props.data.itemDefinitions && props.data.itemDefinitions.map(({ id, name }) => (
       <option key={id} value={id}>{name + " (" +id + ")"}</option>
     ))}
     </select>
