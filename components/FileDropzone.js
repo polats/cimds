@@ -8,6 +8,15 @@ const thumbsContainer = {
   marginTop: 16
 };
 
+const dropContainer = {
+  background: 'white',
+  borderRadius: '5px',
+  border: '2px dashed rgb(0, 135, 247)',
+  borderImage: 'none',
+  height: 50,
+  maxWidth: '500px'
+};
+
 const thumb = {
   display: 'inline-flex',
   borderRadius: 2,
@@ -65,7 +74,7 @@ function FileDropzone(props) {
     <section className="container">
       <div {...getRootProps({className: 'dropzone'})}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p style={dropContainer}>Drag 'n' drop some files here, or click to select files</p>
       </div>
       <aside style={thumbsContainer}>
         {thumbs}

@@ -6,7 +6,19 @@ import itemDefinitionsQuery from '../queries/itemDefinitions'
 import Field from './Field'
 import UploadDropdown from './UploadDropdown'
 
-class AddItemDefinition extends Component {
+const AddItemDefinitionQuery = gql`
+  mutation($itemDefinition: ItemDefinitionInput!) {
+    addItemDefinition(input: $itemDefinition) {
+      id
+      name
+      description
+      external_url
+      image
+    }
+  }
+`
+
+class AddItemDefinition extends React.Component {
 
   state = {
     name: '',
@@ -16,35 +28,35 @@ class AddItemDefinition extends Component {
     }
 
   handleChange = ({ target: { name, value } }) =>
-    this.setState({ [name]: value })
+      this.setState({ [name]: value })
 
   handleFileChange = (e) =>
-    this.setState({ image: window.location.href + "file/" + e.value})
-
-  handleSubmit = event => {
-    event.preventDefault()
-
-    const itemDefinition = this.state
-
-    this.props.mutate({
-
-      variables: { itemDefinition },
-      update(
-        proxy,
-        {
-          data: { addItemDefinition }
-        }
-      ) {
-        const data = proxy.readQuery({ query: itemDefinitionsQuery })
-        data.itemDefinitions.push(addItemDefinition)
-        proxy.writeQuery({ query: itemDefinitionsQuery, data })
-      }
-    })
-  }
+      this.setState({ image: window.location.origin + "file/" + e.value})
 
   render() {
+
+    const { user, mutate, onAdd } = this.props;
+
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={ event => {
+        event.preventDefault()
+
+        const itemDefinition = this.state
+
+        mutate({
+          variables: { itemDefinition },
+        })
+          .then(({ data }) => {
+            if (onAdd) {
+              onAdd();
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+          })
+      }}
+    >
+
         <Field>
           <input
             name="name"
@@ -82,14 +94,4 @@ class AddItemDefinition extends Component {
   }
 }
 
-export default graphql(gql`
-  mutation($itemDefinition: ItemDefinitionInput!) {
-    addItemDefinition(input: $itemDefinition) {
-      id
-      name
-      description
-      external_url
-      image
-    }
-  }
-`)(AddItemDefinition)
+export default graphql(AddItemDefinitionQuery)(AddItemDefinition)

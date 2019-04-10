@@ -17,7 +17,7 @@ const UploadFileQuery = gql`
   }
 `
 
-class UploadDroppedFileComponent extends React.Component {
+class UploadDroppedFile extends React.Component {
   render() {
     const { user, mutate, onUpload } = this.props;
 
@@ -45,46 +45,4 @@ class UploadDroppedFileComponent extends React.Component {
   }
 }
 
-/*
-<form
-  onSubmit={(e) => {
-    e.preventDefault();
-    mutate({
-      variables: {
-        title: this.title.value,
-        content: this.content.value,
-      },
-    })
-      .then(({ data }) => {
-        if (onCreatePost) {
-          onCreatePost();
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }}
->
-
-const UploadDroppedFile = ({ mutate }) => {
-  const handleChange = (files) =>
-    mutate({
-      variables: { files },
-      update(
-        proxy,
-        {
-          data: { multipleUpload }
-        }
-      ) {
-        const data = proxy.readQuery({ query: uploadsQuery })
-        data.uploads.push(...multipleUpload)
-        console.log(multipleUpload)
-        console.log(proxy)
-        proxy.writeQuery({ query: uploadsQuery, data })
-      }
-    })
-
-*/
-
-
-export default compose(withUser,graphql(UploadFileQuery))(UploadDroppedFileComponent)
+export default compose(withUser,graphql(UploadFileQuery))(UploadDroppedFile)
