@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const itemInstanceSchema = new mongoose.Schema({
-  collection_id: {
+  token_id: {
     type: String,
     required: true
   },

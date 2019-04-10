@@ -4,7 +4,7 @@ export default gql`
   query itemInstances {
     itemInstances {
       id
-      collection_id
+      token_id
       def_id
     }
   }`

@@ -36,7 +36,7 @@ class ItemDefinitions extends React.Component {
               <Head>Image</Head>
             </tr>
           }
-          tbody={itemDefinitions.map(({ id, name, description, external_url, image }) => (
+          tbody={itemDefinitions && itemDefinitions.map(({ id, name, description, external_url, image }) => (
             <tr key={id}>
               <Cell>{id}</Cell>
               <Cell>{name}</Cell>

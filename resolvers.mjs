@@ -52,7 +52,7 @@ const addItemDefinition = (input) => {
 const addItemInstance = (input) => {
 
   const newItemInstance = new ItemInstance({
-    collection_id: input.collection_id,
+    token_id: input.token_id,
     def_id: input.def_id
   })
 

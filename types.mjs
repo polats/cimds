@@ -46,12 +46,12 @@ export default /* GraphQL */ `
 
   type ItemInstance {
     id: ID!
-    collection_id: String!
+    token_id: String!
     def_id: String!
   }
 
   input ItemInstanceInput {
-    collection_id: String!
+    token_id: String!
     def_id: String!
   }
 
