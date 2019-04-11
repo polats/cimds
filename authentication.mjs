@@ -16,11 +16,11 @@ import emailer from 'ooth-local-emailer'
   const ObjectId = mongodb.ObjectId;
 
   const client = await MongoClient.connect(
-    `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`,
+    process.env.MONGODB_URI,
     { useNewUrlParser: true },
   );
 
-  const db = client.db(process.env.MONGO_DB);
+  const db = client.db(process.env.MONGODB_URI.split("/").pop());
 
   const oothMongo = new OothMongo.OothMongo(db);
 
