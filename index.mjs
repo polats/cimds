@@ -57,8 +57,7 @@ const start = async () => {
     const sessionArgs = {
       name: 'app-session-id',
       store: new RedisStore({
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT,
+        url: process.env.REDIS_URL
       }),
       secret: process.env.SESSION_SECRET,
       resave: false,

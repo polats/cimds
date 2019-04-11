@@ -3,15 +3,20 @@
   "description": "Server to manage virtual item definitions for blockchain/crypto games",
   "logo": "http://docs.alto.io/alto-forge-icon.png",
   "repository": "https://github.com/polats/itemdef-server",
-  "success_url": "/graphql",
+  "success_url": "/",
   "addons": [
     "mongolab",
-    "cloudinary"
+    "heroku-redis"
   ],
   "env": {
     "GRAPHQL_URI": {
       "description": "The GraphQL endpoint used by this app. Replace YOURAPPNAME with your 'App Name' defined above.",
       "value": "https://YOURAPPNAME.herokuapp.com/graphql"
-    }
+    },
+    "SESSION_SECRET": {
+      "description": "A long random key for securing user sessions, replace with your own.",
+      "value": "ReplaceMeWithYourOwnRandomKeyPleaseOKR3fr1g3r4t0r"
+    },
+
   }
 }
