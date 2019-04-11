@@ -16,7 +16,6 @@
     "SESSION_SECRET": {
       "description": "A long random key for securing user sessions, replace with your own.",
       "value": "ReplaceMeWithYourOwnRandomKeyPleaseOKR3fr1g3r4t0r"
-    },
-
+    }
   }
 }
