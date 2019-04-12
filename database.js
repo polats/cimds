@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import Grid from 'gridfs-stream'
+const mongoose = require('mongoose');
+const Grid = require('gridfs-stream');
 
 Grid.mongo = mongoose.mongo
 var mc = mongoose.connection;
@@ -13,4 +13,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
 const connection = {mc, gfs}
 
-export default connection
+module.exports = connection

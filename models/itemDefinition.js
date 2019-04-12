@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 const itemDefinitionSchema = new mongoose.Schema({
   name: {
@@ -19,4 +19,4 @@ const itemDefinitionSchema = new mongoose.Schema({
   }
 })
 
-export default mongoose.model('ItemDefinition', itemDefinitionSchema)
+module.exports = mongoose.model('ItemDefinition', itemDefinitionSchema)

@@ -1,14 +1,14 @@
-import mongodb from 'mongodb'
-import session from 'express-session'
+const mongodb = require('mongodb');
+const session = require('express-session');
 
-import Ooth from 'ooth'
-import OothMongo from 'ooth-mongo'
-import oothLocal from 'ooth-local'
-import oothUser from 'ooth-user'
-import oothFacebook from 'ooth-facebook'
-import oothGoogle from 'ooth-google'
-import oothTwitter from 'ooth-twitter'
-import emailer from 'ooth-local-emailer'
+const Ooth = require('ooth');
+const OothMongo = require('ooth-mongo');
+const oothLocal = require('ooth-local');
+const oothUser = require('ooth-user');
+const oothFacebook = require('ooth-facebook');
+const oothGoogle = require('ooth-google');
+const oothTwitter = require('ooth-twitter');
+const emailer = require('ooth-local-emailer');
 
   const authenticate = async (app, sessionArgs) => {
 
@@ -71,4 +71,4 @@ import emailer from 'ooth-local-emailer'
 
 }
 
-export default authenticate
+module.exports = authenticate

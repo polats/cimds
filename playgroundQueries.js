@@ -1,5 +1,5 @@
 // default graphQL playground queries
-export default {
+module.exports = {
   itemCollection:
   `
   query {

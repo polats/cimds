@@ -1,19 +1,21 @@
-import next from 'next'
-import express from 'express'
-import session from 'express-session'
-import connectRedis from 'connect-redis'
-import cookieParser from 'cookie-parser'
+require('dotenv').config();
 
-import morgan from 'morgan'
-import cors from 'cors'
+const next = require('next');
+const express = require('express');
+const session = require('express-session');
+const connectRedis = require('connect-redis');
+const cookieParser = require('cookie-parser');
 
-import passport from 'passport'
-import ase from 'apollo-server-express'
-import typeDefs from './types'
-import resolvers from './resolvers'
-import connection from './database'
-import authenticate from './authentication'
-import queries from './playgroundQueries'
+const morgan = require('morgan');
+const cors = require('cors');
+
+const passport = require('passport');
+const ase = require('apollo-server-express');
+const typeDefs = require('./types');
+const resolvers = require('./resolvers');
+const connection = require('./database');
+const authenticate = require('./authentication');
+const queries = require('./playgroundQueries');
 
 var tabProps = []
 

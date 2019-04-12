@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 const itemInstanceSchema = new mongoose.Schema({
   token_id: {
@@ -12,4 +12,4 @@ const itemInstanceSchema = new mongoose.Schema({
   }
 })
 
-export default mongoose.model('ItemInstance', itemInstanceSchema)
+module.exports = mongoose.model('ItemInstance', itemInstanceSchema)

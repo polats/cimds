@@ -1,4 +1,4 @@
-export default /* GraphQL */ `
+module.exports = `
   type User {
     _id: ID!
   }

@@ -1,13 +1,13 @@
-import ase from 'apollo-server-express'
-import promisesAll from 'promises-all'
-import _ from 'lodash'
+const ase = require('apollo-server-express');
+const promisesAll = require('promises-all');
+const _ = require('lodash');
 
-import ItemDefinition from './models/itemDefinition'
-import ItemInstance from './models/itemInstance'
-import Comment from './models/comment'
-import Post from './models/post'
-import User from './models/user'
-import connection from './database'
+const ItemDefinition = require('./models/itemDefinition');
+const ItemInstance = require('./models/itemInstance');
+const Comment = require('./models/comment');
+const Post = require('./models/post');
+const User = require('./models/user');
+const connection = require('./database');
 
 const storeFS = ({ stream, filename, mimetype }) => {
 
@@ -97,12 +97,12 @@ const getAllItems = () => {
   })
 }
 
-export async function getAllFiles() {
+async function getAllFiles() {
   const allFiles = await connection.gfs.files.find({}).toArray()
   return allFiles
 }
 
-export default {
+module.exports = {
   Upload: ase.GraphQLUpload,
 
   Query: {

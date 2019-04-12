@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "npm install && (cp -n .env.dist .env || true) && (cp -n .env.docker.dist .env.docker || true)",
-    "dev": "node --experimental-modules -r dotenv/config .",
+    "dev": "nodemon .",
     "build": "next build",
-    "start": "node --experimental-modules -r dotenv/config ."
+    "start": "node ."
   },
   "author": {
     "name": "Paul Gadi",
