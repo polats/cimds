@@ -23,15 +23,18 @@
     },
     "FACEBOOK_CLIENT_ID": {
       "description": "Leave blank if not used.",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "GOOGLE_CLIENT_ID": {
       "description": "Leave blank if not used.",
-      "value": ""
+      "value": "",
+      "required": false
     },
     "TWITTER_CLIENT_ID": {
       "description": "Leave blank if not used.",
-      "value": ""
+      "value": "",
+      "required": false
     }
   }
 }
