@@ -4,8 +4,8 @@ import Uploads from '../components/Uploads'
 import ItemDefinitions from '../components/ItemDefinitions'
 import ItemInstances from '../components/ItemInstances'
 
-export default withPage(() => (
-
+const ItemsPage = (props) =>
+(
   <Layout title="Items" page="items">
     <div className="row">
       <div className="col-md-6">
@@ -22,7 +22,7 @@ export default withPage(() => (
         </div>
       </div>
     </div>
-
   </Layout>
+)
 
-))
+export default withPage(ItemsPage)

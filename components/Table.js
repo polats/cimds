@@ -7,6 +7,9 @@ export const Table = ({ thead, tbody }) => (
     <style jsx>{`
       div {
         overflow-x: auto;
+        max-width: 500px;
+        overflow-y: auto;
+        max-height: 450px;
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
       }

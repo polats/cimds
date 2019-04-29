@@ -10,6 +10,6 @@ const {
 export default withApollo({
   url: `${(serverRuntimeConfig && serverRuntimeConfig.url) || url}/graphql`,
   apolloOpts: {
-    link: createUploadLink({ uri: process.env.GRAPHQL_URI })
+    link: createUploadLink({ uri: `${(serverRuntimeConfig && serverRuntimeConfig.url) || url}/graphql` })
   }
 });

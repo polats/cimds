@@ -23,7 +23,7 @@
     "apollo-server-express": "^2.1.0",
     "apollo-upload-client": "^10.0.0",
     "babili-webpack-plugin": "^0.1.2",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.19.0",
     "compose-next": "^2.6.0",
     "connect-redis": "^3.4.0",
     "cookie-parser": "^1.4.3",

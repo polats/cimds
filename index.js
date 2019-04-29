@@ -16,7 +16,7 @@ const resolvers = require('./resolvers');
 const connection = require('./database');
 const authenticate = require('./authentication');
 const queries = require('./playgroundQueries');
-
+const bodyParser = require('body-parser');
 var tabProps = []
 
 // create default query & mutation tabs based on playgroundQueries.js
@@ -40,9 +40,10 @@ const start = async () => {
     prepareTabs()
 
     const app = express();
-    var router = express.Router()
 
     app.use(morgan('dev'));
+    app.use(bodyParser.json({limit: '50mb'}));
+    app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
     const corsMiddleware = cors({
       origin: process.env.ORIGIN_URL,
@@ -131,8 +132,8 @@ const start = async () => {
         tabs: tabProps
       },
       uploads: {
-        maxFileSize: 10000000, // 10 MB
-        maxFiles: 20
+        maxFileSize: 10000000 // 10 MB
+        // maxFiles: 20
       }
     });
 

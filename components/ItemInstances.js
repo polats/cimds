@@ -24,7 +24,7 @@ class ItemInstances extends React.Component {
     }
     return (
       <div>
-      <AddItemInstance onAdd={refetch} />      
+      <AddItemInstance onAdd={refetch} />
       <Table
         thead={
           <tr>

@@ -49,6 +49,27 @@ const addItemDefinition = (input) => {
   return newItemDefinition.save()
 }
 
+const addItemDefinitionViaJson = (json) => {
+
+  var jsonObject = Object.values(JSON.parse(json))[0];
+  var itemDefinitionArray = [];
+
+  jsonObject.map( (itemDef) => {
+    var newItemDefinition = new ItemDefinition({
+      name: itemDef.name,
+      description: itemDef.desc,
+      image: itemDef.image,
+      otherProps: JSON.stringify(itemDef)
+
+    });
+
+    newItemDefinition.save();
+    itemDefinitionArray.push(newItemDefinition);
+  });
+
+  return itemDefinitionArray;
+}
+
 const addItemInstance = (input) => {
 
   const newItemInstance = new ItemInstance({
@@ -154,6 +175,7 @@ module.exports = {
     },
 
     addItemDefinition: (root, args) => addItemDefinition(args.input),
+    addItemDefinitionViaJson: (root, args) => addItemDefinitionViaJson(args.json),
     addItemInstance: (root, args) => addItemInstance(args.input),
 
     createPost: (root, args, { userId }, info) => {

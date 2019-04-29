@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import { Component } from 'react'
 import { Table, Head, Cell } from './Table'
 import AddItemDefinition from './AddItemDefinition'
+import AddItemDefinitionViaJson from './AddItemDefinitionViaJson'
 
 const ItemDefinitionsQuery = gql`
   query itemDefinitions {
@@ -25,7 +26,7 @@ class ItemDefinitions extends React.Component {
     }
     return (
       <div>
-        <AddItemDefinition onAdd={refetch} />
+        <AddItemDefinitionViaJson onAdd={refetch} />
         <Table
           thead={
             <tr>
@@ -42,7 +43,7 @@ class ItemDefinitions extends React.Component {
               <Cell>{name}</Cell>
               <Cell>{description}</Cell>
               <Cell>{external_url}</Cell>
-              <Cell><a href={image}>{image}</a></Cell>
+              <Cell><a href={"/file/" + image}>{image}</a></Cell>
             </tr>
           ))}
         />

@@ -35,6 +35,7 @@ module.exports = `
     description: String!
     external_url: String
     image: String
+    otherProps: String
   }
 
   input ItemDefinitionInput {
@@ -42,6 +43,7 @@ module.exports = `
     description: String!
     external_url: String
     image: String
+    otherProps: String
   }
 
   type ItemInstance {
@@ -79,6 +81,7 @@ module.exports = `
     singleUpload(file: Upload!): File!
     multipleUpload(files: [Upload!]!): [File!]!
     addItemDefinition(input: ItemDefinitionInput!): ItemDefinition
+    addItemDefinitionViaJson(json: String!): [ItemDefinition]
     addItemInstance(input: ItemInstanceInput!): ItemInstance
     createPost(title: String, content: String): Post
     createComment(postId: ID!, content: String): Comment
