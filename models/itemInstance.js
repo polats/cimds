@@ -9,6 +9,10 @@ const itemInstanceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ItemDefinition',
     required: true
+  },
+  details: {
+    type: mongoose.Schema.Types.Mixed,
+    required: false
   }
 })
 

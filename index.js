@@ -19,6 +19,9 @@ const queries = require('./playgroundQueries');
 const bodyParser = require('body-parser');
 var tabProps = []
 
+const ItemDefinition = require('./models/itemDefinition');
+const ItemInstance = require('./models/itemInstance');
+
 // create default query & mutation tabs based on playgroundQueries.js
 const prepareTabs = () => {
   Object.getOwnPropertyNames(queries).map(queryName => {
@@ -87,6 +90,60 @@ const start = async () => {
     const handle = nextApp.getRequestHandler();
 
     await nextApp.prepare();
+
+    // get json of all item definitions
+    app.get('/itemdefs', async (req, res) => {
+      var imagePrefix = process.env.URL + "/file/";
+      var itemDefs = await ItemDefinition.find({}).exec();
+      var returnArray = [];
+      itemDefs.map(itemDef => {
+        var returnedItemDef = {
+          ...JSON.parse(itemDef.otherProps),
+          id: itemDef.id,
+          name: itemDef.name,
+          description: itemDef.description,
+          external_url: itemDef.external_url,
+          image: imagePrefix + itemDef.image
+        }
+
+        returnArray.push(returnedItemDef);
+      })
+
+      res.send(returnArray);
+    });
+
+    app.get('/tokenuri', async (req, res) => {
+      var tokenURI = await ItemInstance.find( {} ).exec();
+      res.send(tokenURI);
+    });
+
+    app.get('/tokenuri/:tokenId', async (req, res) => {
+      var tokenURI = await ItemInstance.findOne( {token_id: req.params.tokenId} ).exec();
+      res.send(tokenURI);
+    });
+
+    app.post('/addToken', async (req, res) => {
+      try {
+          var def_id = req.body.def_id;
+        var token_id = req.body.token_id;
+        var details = req.body.details;
+
+        var newToken = new ItemInstance({
+          def_id: def_id,
+          token_id: token_id,
+          details: details
+        })
+
+        var returnVal = await newToken.save();
+        return returnVal;
+
+      } catch (e) {
+        console.log(e);
+        res.send(e);
+      }
+    });
+
+
 
     // Retrieve uploaded file
     app.get('/file/:filename', async (req, res) => {
