@@ -127,7 +127,7 @@ const start = async () => {
         name: itemDef.name,
         description: itemDef.description,
         external_url: itemDef.external_url,
-        image: imagePrefix + itemDef.image
+        image: imagePrefix + itemDef.image,
 
         ...itemInstance.details
       };
