@@ -1,6 +1,7 @@
 const ase = require('apollo-server-express');
 const promisesAll = require('promises-all');
 const _ = require('lodash');
+const mongoose = require('mongoose');
 
 const ItemDefinition = require('./models/itemDefinition');
 const ItemInstance = require('./models/itemInstance');
@@ -56,11 +57,11 @@ const addItemDefinitionViaJson = (json) => {
 
   jsonObject.map( (itemDef) => {
     var newItemDefinition = new ItemDefinition({
+      id: itemDef.id,
       name: itemDef.name,
       description: itemDef.desc,
       image: itemDef.image,
       otherProps: JSON.stringify(itemDef)
-
     });
 
     newItemDefinition.save();

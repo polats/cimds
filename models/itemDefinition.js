@@ -12,7 +12,7 @@ const itemDefinitionSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   external_url: {
     type: String,

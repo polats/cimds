@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const itemInstanceSchema = new mongoose.Schema({
   token_id: {
-    type: String,
+    type: mongoose.Schema.Types.Number,
+    unique: true,
     required: true
   },
   def_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'ItemDefinition',
+    type: String,
     required: true
   },
   details: {

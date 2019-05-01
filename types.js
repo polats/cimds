@@ -32,7 +32,7 @@ module.exports = `
   type ItemDefinition {
     id: ID!
     name: String!
-    description: String!
+    description: String
     external_url: String
     image: String
     otherProps: String

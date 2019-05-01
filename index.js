@@ -113,12 +113,25 @@ const start = async () => {
     });
 
     app.get('/tokenuri', async (req, res) => {
-      var tokenURI = await ItemInstance.find( {} ).exec();
-      res.send(tokenURI);
+      var itemInstanceArray = await ItemInstance.find( {} ).exec();
+
+      res.send(itemInstanceArray);
     });
 
     app.get('/tokenuri/:tokenId', async (req, res) => {
-      var tokenURI = await ItemInstance.findOne( {token_id: req.params.tokenId} ).exec();
+      var imagePrefix = process.env.URL + "/file/";
+      var itemInstance = await ItemInstance.findOne( {token_id: req.params.tokenId} ).exec();
+
+      var itemDef = await ItemDefinition.findOne( {id: itemInstance.def_id} ).exec();
+      var tokenURI = {
+        name: itemDef.name,
+        description: itemDef.description,
+        external_url: itemDef.external_url,
+        image: imagePrefix + itemDef.image
+
+        ...itemInstance.details
+      };
+
       res.send(tokenURI);
     });
 
