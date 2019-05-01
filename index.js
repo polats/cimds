@@ -148,7 +148,7 @@ const start = async () => {
         })
 
         var returnVal = await newToken.save();
-        return returnVal;
+        res.send(returnVal);
 
       } catch (e) {
         console.log(e);
